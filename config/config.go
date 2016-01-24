@@ -3,10 +3,12 @@ package config
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"github.com/gregarmer/r53dyndns/utils"
+	"log"
 	"os"
 	"os/user"
-	"path/filepath"
+	"strings"
 )
 
 const configFile = ".r53dyndns"
@@ -32,23 +34,21 @@ func (c *Config) PreFlight() error {
 	return nil
 }
 
-func GetConfigPath() string {
-	u, _ := user.Current()
-	return filepath.Join(u.HomeDir, configFile)
-}
-
 func LoadConfig(configFile string) *Config {
-	// make sure the config file actually exists
-	if _, err := os.Stat(configFile); os.IsNotExist(err) {
-		utils.Fatalf("couldn't load config from %s", configFile)
+	// expand tilde to users home dir
+	if strings.HasPrefix(configFile, "~") {
+		u, _ := user.Current()
+		configFile = strings.Replace(configFile, "~", u.HomeDir, 1)
 	}
 
-	// init config if needed
-	defaultConfigPath := GetConfigPath()
-	if configFile == defaultConfigPath {
-		if _, err := os.Stat(configFile); os.IsNotExist(err) {
-			utils.Fatalf("please create a config file containing your AWS creds.")
-		}
+	log.Printf("config file is %s", configFile)
+
+	// make sure the config file actually exists
+	if _, err := os.Stat(configFile); os.IsNotExist(err) {
+		utils.Fatalf("Error: couldn't load config from %s\n\n"+
+			"If you haven't configured r53dyndns yet, place a "+
+			"file that looks like this in ~/.r53dyndns:\n\n%s",
+			configFile, SampleConfig())
 	}
 
 	// load config
@@ -59,8 +59,14 @@ func LoadConfig(configFile string) *Config {
 		utils.Fatalf("error: %s", err)
 	}
 
-	// pre-flight check (s3 keys, access to postgres etc)
+	// pre-flight check
 	utils.CheckErr(config.PreFlight())
 
 	return &config
+}
+
+func SampleConfig() string {
+	config := Config{}
+	fileJson, _ := json.MarshalIndent(config, "", "  ")
+	return fmt.Sprintf("%s", fileJson)
 }
