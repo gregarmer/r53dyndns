@@ -4,6 +4,7 @@ import (
 	// "bytes"
 	"flag"
 	"github.com/gregarmer/r53dyndns/config"
+	"github.com/gregarmer/r53dyndns/dyndns"
 	"github.com/gregarmer/r53dyndns/utils"
 	"io/ioutil"
 	"log"

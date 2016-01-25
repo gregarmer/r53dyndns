@@ -16,6 +16,7 @@ const configFile = ".r53dyndns"
 type Config struct {
 	AwsAccessKey string `json:"aws_access_key"`
 	AwsSecretKey string `json:"aws_secret_key"`
+	ZoneId       string `json:"zone_id"`
 }
 
 func (c *Config) Copy() Config {
@@ -29,6 +30,10 @@ func (c *Config) PreFlight() error {
 
 	if c.AwsSecretKey == "" {
 		return errors.New("missing AwsSecretKey, cannot continue")
+	}
+
+	if c.ZoneId == "" {
+		return errors.New("missing ZoneId, cannot continue")
 	}
 
 	return nil
