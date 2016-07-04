@@ -5,7 +5,7 @@ build:
 
 notify:
   slack:
-    webhook_url: $$SLACK_WEBHOOK_URL
+    webhook_url: $$SLACK_WEBHOOK
     channel: general
     username: $$SLACK_USERNAME
     template: >
