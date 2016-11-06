@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/gregarmer/r53dyndns/utils"
 	"log"
 	"os"
 	"os/user"
 	"strings"
+
+	"github.com/gregarmer/r53dyndns/utils"
 )
 
 const configFile = ".r53dyndns"
