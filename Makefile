@@ -15,15 +15,15 @@ deps:
 
 freebsd:
 	@echo [go] building FreeBSD amd64 binary...
-	@time GOOS=freebsd GOARCH=amd64 go build -o $(DIST_DIR)/r53syndns.fbsd main.go
+	@time GOOS=freebsd GOARCH=amd64 go build -o $(DIST_DIR)/r53dyndns.fbsd main.go
 
 openbsd:
 	@echo [go] building OpenBSD amd64 binary...
-	@time GOOS=openbsd GOARCH=amd64 go build -o $(DIST_DIR)/r53syndns.obsd main.go
+	@time GOOS=openbsd GOARCH=amd64 go build -o $(DIST_DIR)/r53dyndns.obsd main.go
 
 linux:
 	@echo [go] building Linux amd64 binary...
-	@time GOOS=linux GOARCH=amd64 go build -o $(DIST_DIR)/r53syndns.linux main.go
+	@time GOOS=linux GOARCH=amd64 go build -o $(DIST_DIR)/r53dyndns.linux main.go
 
 build: clean deps freebsd openbsd linux
 
