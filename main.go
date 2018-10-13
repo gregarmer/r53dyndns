@@ -57,9 +57,14 @@ func main() {
 		utils.Fatalf("Error: please supply one of -s, -a, -i. Use -h for help.")
 	}
 
+	// check if the requested IP is the same as our last update
+	// check ~/.r53dyndns.state
+
 	// update record
 	// XXX: only if it changed from the last run
 	r53.UpsertDomain(*domain, ip)
+
+	// save requested IP to ~/.r53dyndns.state for next time
 
 	log.Printf("done - took %s", time.Since(start_time))
 }
