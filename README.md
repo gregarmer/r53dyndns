@@ -2,7 +2,7 @@
 
 Dynamic DNS service backed by AWS Route 53.
 
-[![Build Status](https://travis-ci.org/gregarmer/r53dyndns.svg?branch=master)](https://travis-ci.org/gregarmer/r53dyndns)
+[![CircleCI](https://circleci.com/gh/gregarmer/r53dyndns/tree/master.svg?style=svg)](https://circleci.com/gh/gregarmer/r53dyndns/tree/master)
 
 ## Overview
 
