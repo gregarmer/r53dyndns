@@ -21,11 +21,6 @@ func GetExternalIP() (string, error) {
 	m.SetQuestion(target, dns.TypeA)
 	r, t, err := c.Exchange(&m, server)
 	CheckErr(err)
-	// TODO: handle errors better
-	// Perhaps log an error once a day indicating that we weren't able to find
-	// external IP automatically.  If we couldn't, then it's likely that there is
-	// no internet connection, in which case queueing a bunch of mail alerts is
-	// not a good idea.
 
 	if len(r.Answer) < 1 {
 		log.Fatal("No results")
